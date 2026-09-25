@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اليوم الوطني السعودي 96 | مدرسة ابن كثير المتوسطة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Tajawal & Cairo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saudi: {
+                            dark: '#02381C',
+                            DEFAULT: '#006C35',
+                            light: '#008C45',
+                            emerald: '#059669',
+                            gold: '#D4AF37',
+                            goldLight: '#F3E5AB',
+                            sand: '#FDFBF7'
+                        }
+                    },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif'],
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #012211;
+            color: #f8fafc;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 108, 53, 0.35) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 40%);
+        }
+
+        /* Glassmorphism styling */
+        .glass-panel {
+            background: rgba(2, 56, 28, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .glass-card {
+            background: rgba(5, 70, 36, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 108, 53, 0.5);
+        }
+
+        /* Gold Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF5C0 0%, #D4AF37 50%, #AA7C11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Green Gradient Text */
+        .text-green-gradient {
+            background: linear-gradient(135deg, #A7F3D0 0%, #34D399 50%, #006C35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glowing Effects */
+        .glow-gold {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .glow-green {
+            box-shadow: 0 0 35px rgba(0, 108, 53, 0.6);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #01190d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #006C35;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* Audio Visualizer Animation */
+        @keyframes barPulse {
+            0%, 100% { height: 6px; }
+            50% { height: 28px; }
+        }
+        .v-bar {
+            animation: barPulse 1.2s infinite ease-in-out;
+        }
+        .v-bar:nth-child(2) { animation-delay: 0.2s; }
+        .v-bar:nth-child(3) { animation-delay: 0.4s; }
+        .v-bar:nth-child(4) { animation-delay: 0.1s; }
+        .v-bar:nth-child(5) { animation-delay: 0.5s; }
+
+        .paused {
+            animation-play-state: paused !important;
+            height: 6px !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-saudi-gold selection:text-saudi-dark">
+
+    <!-- Fireworks Overlay Canvas -->
+    <canvas id="fireworksCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-saudi-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Badge -->
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-saudi-dark to-saudi-light border border-saudi-gold/40 flex items-center justify-center shadow-lg text-saudi-gold text-2xl font-black">
+                    96
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-white leading-tight">اليوم الوطني السعودي 96</h1>
+                    <p class="text-xs text-saudi-gold font-medium">نحلم ونحقق • هي لنا دار</p>
+                </div>
+            </div>
+
+            <!-- Student & School Info Badge Header -->
+            <div class="hidden md:flex items-center gap-4 glass-card px-5 py-2 rounded-2xl border-saudi-gold/30">
+                <div class="w-10 h-10 rounded-full bg-saudi-gold/20 text-saudi-gold flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-saudi-gold font-bold">مدرسة ابن كثير المتوسطة</div>
+                    <div class="text-sm font-extrabold text-white">فارس محمد السيد <span class="text-xs bg-saudi-DEFAULT text-saudi-goldLight px-2 py-0.5 rounded-md mr-1 border border-saudi-gold/30">الصف 3/5</span></div>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center gap-3">
+                <button onclick="triggerCelebration()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-saudi-gold to-yellow-600 text-saudi-dark font-extrabold text-xs sm:text-sm shadow-lg hover:brightness-110 active:scale-95 transition flex items-center gap-2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>احتفل الآن!</span>
+                </button>
+                <button onclick="window.print()" class="p-2.5 rounded-xl glass-card text-gray-300 hover:text-white hover:border-saudi-gold/50 transition" title="طباعة أو حفظ البطاقة">
+                    <i class="fa-solid fa-print text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative py-12 lg:py-16 px-4 overflow-hidden">
+            <div class="max-w-6xl mx-auto text-center relative z-10">
+                
+                <!-- Main Badge & Emblem -->
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full glass-panel border border-saudi-gold/40 text-saudi-gold text-sm font-bold mb-8 glow-gold animate-bounce">
+                    <i class="fa-solid fa-flag text-saudi-gold"></i>
+                    <span>دمت يا وطن العز شامخاً • 96 عاماً من المجد</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-6">
+                    نعتز بـ <span class="text-gold-gradient">ماضينا</span> .. <br class="hidden sm:inline"/>
+                    ونبني <span class="text-green-gradient">مستقبل أجيالنا</span>
+                </h1>
+
+                <p class="max-w-2xl mx-auto text-gray-300 text-base sm:text-lg mb-10 leading-relaxed font-light">
+                    بمناسبة اليوم الوطني السعودي الـ 96، يسرّنا تقديم هذه الصفحة التفاعلية احتفاءً بمجد الوطن وعزّته ورؤيته الطموحة.
+                </p>
+
+                <!-- Student & School Dedicated Card Banner -->
+                <div class="max-w-2xl mx-auto glass-panel p-6 rounded-3xl border-2 border-saudi-gold/40 shadow-2xl relative mb-12">
+                    <div class="absolute -top-3.5 right-1/2 translate-x-1/2 bg-gradient-to-r from-saudi-gold to-yellow-600 text-saudi-dark px-5 py-1 rounded-full text-xs font-black tracking-wide shadow-md">
+                        <i class="fa-solid fa-award mr-1"></i> بطاقة المشاركة الوطنية المدرسية
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 items-center">
+                        <!-- School Info -->
+                        <div class="flex items-center gap-3 p-3 glass-card rounded-2xl border-saudi-gold/20">
+                            <div class="w-11 h-11 rounded-xl bg-saudi-DEFAULT/80 border border-saudi-gold/40 flex items-center justify-center text-saudi-gold text-xl shrink-0">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <div class="text-right overflow-hidden">
+                                <span class="block text-[10px] text-gray-400">المدرسة</span>
+                                <span class="text-sm font-black text-white truncate block">مدرسة ابن كثير المتوسطة</span>
+                            </div>
+                        </div>
+
+                        <!-- Student Name -->
+                        <div class="flex items-center gap-3 p-3 glass-card rounded-2xl border-saudi-gold/20">
+                            <div class="w-11 h-11 rounded-xl bg-saudi-DEFAULT/80 border border-saudi-gold/40 flex items-center justify-center text-saudi-gold text-xl shrink-0">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <div class="text-right overflow-hidden">
+                                <span class="block text-[10px] text-gray-400">اسم الطالب</span>
+                                <span class="text-base font-black text-saudi-goldLight truncate block">فارس محمد السيد</span>
+                            </div>
+                        </div>
+
+                        <!-- Class Info -->
+                        <div class="flex items-center gap-3 p-3 glass-card rounded-2xl border-saudi-gold/20">
+                            <div class="w-11 h-11 rounded-xl bg-saudi-DEFAULT/80 border border-saudi-gold/40 flex items-center justify-center text-saudi-gold text-xl shrink-0">
+                                <i class="fa-solid fa-children"></i>
+                            </div>
+                            <div class="text-right overflow-hidden">
+                                <span class="block text-[10px] text-gray-400">الصف الدراسي</span>
+                                <span class="text-base font-black text-white truncate block">الصف 3 / 5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action CTA Buttons -->
+                <div class="flex flex-wrap justify-center items-center gap-4">
+                    <a href="#interactive-features" class="px-8 py-4 rounded-2xl bg-saudi-DEFAULT hover:bg-saudi-light text-white font-extrabold shadow-lg shadow-saudi-DEFAULT/40 transition duration-300 flex items-center gap-3">
+                        <span>العروض والتفاعلات الوطنية</span>
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <button onclick="generateNationalQuote()" class="px-8 py-4 rounded-2xl glass-card text-saudi-goldLight font-bold hover:bg-saudi-dark/80 transition duration-300 border border-saudi-gold/30 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-right text-saudi-gold"></i>
+                        <span>رسالة افتخار بالوطن</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="interactive-features" class="py-12 bg-saudi-dark/30 border-y border-saudi-gold/10 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- National Anthem Visualizer Card -->
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-saudi-gold/30">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-saudi-gold/20 text-saudi-gold flex items-center justify-center">
+                                    <i class="fa-solid fa-music"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">النشيد الوطني السعودي</h3>
+                                    <p class="text-xs text-gray-400">سارعي للمجد والعلياء</p>
+                                </div>
+                            </div>
+
+                            <!-- Visualizer Equalizer Bars -->
+                            <div class="flex items-end gap-1.5 h-8 px-3 py-1 glass-card rounded-lg" id="visualizerContainer">
+                                <div class="w-1.5 bg-saudi-gold rounded-full v-bar paused"></div>
+                                <div class="w-1.5 bg-saudi-gold rounded-full v-bar paused"></div>
+                                <div class="w-1.5 bg-saudi-gold rounded-full v-bar paused"></div>
+                                <div class="w-1.5 bg-saudi-gold rounded-full v-bar paused"></div>
+                                <div class="w-1.5 bg-saudi-gold rounded-full v-bar paused"></div>
+                            </div>
+                        </div>
+
+                        <p class="text-sm text-gray-300 mb-6 leading-relaxed bg-black/20 p-4 rounded-2xl border border-white/5 font-serif italic text-center">
+                            "سارعي للمجد والعلياء .. مجدي لخالق السماء <br/>
+                            وارفعي الخفاق أخضر .. يحمل النور المسطر"
+                        </p>
+
+                        <button id="anthemBtn" onclick="toggleNationalAnthem()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-saudi-DEFAULT to-saudi-light text-white font-bold shadow-lg hover:brightness-110 transition flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-play" id="anthemIcon"></i>
+                            <span id="anthemText">عزف السلام الملكي (تفاعلي)</span>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Quote Box -->
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-saudi-gold/30 flex flex-col justify-between min-h-[280px]">
+                        <div>
+                            <div class="flex items-center gap-2 text-saudi-gold text-xs font-bold uppercase tracking-wider mb-3">
+                                <i class="fa-solid fa-feather-pointed"></i>
+                                <span>كلمات وإلهامات وطنية</span>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 leading-relaxed" id="quoteText">
+                                "همتنا مثل جبل طويق، لن تنكسر إلا إذا انهد هذا الجبل وسوي بالأرض."
+                            </h3>
+                            <p class="text-xs text-saudi-gold font-semibold" id="quoteAuthor">- صانع الرؤية ولي العهد الأمير محمد بن سلمان</p>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center">
+                            <span class="text-xs text-gray-400">انقر لاستعراض عبارات أخرى</span>
+                            <button onclick="generateNationalQuote()" class="px-4 py-2 rounded-xl glass-card hover:bg-saudi-gold/20 text-saudi-gold text-xs font-bold transition flex items-center gap-2">
+                                <i class="fa-solid fa-rotate"></i>
+                                <span>عبارة جديدة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-4 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-block bg-saudi-gold/10 text-saudi-gold px-4 py-1.5 rounded-full text-xs font-bold mb-3 border border-saudi-gold/20">
+                    رؤية المملكة 2030
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">معالم العز وطموح المستقبل</h2>
+                <p class="text-gray-300 text-sm sm:text-base">استعرض أبرز المشاريع والرموز الوطنية التي تمثل فخر المملكة العربية السعودية في يومها الـ 96.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Landmark 1: Diriyah -->
+                <div class="glass-card rounded-3xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=600&q=80" alt="الدرعية التاريخية" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/006C35/ffffff?text=Diriyah'"/>
+                        <span class="absolute top-3 right-3 bg-saudi-dark/80 backdrop-blur-md text-saudi-gold text-xs font-bold px-3 py-1 rounded-full border border-saudi-gold/30">مهد الدولة</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-2">الدرعية التاريخية</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">عاصمة الدولة السعودية الأولى، وترمز إلى الجذور التاريخية الراسخة والثقافة العريقة.</p>
+                    </div>
+                </div>
+
+                <!-- Landmark 2: NEOM -->
+                <div class="glass-card rounded-3xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&w=600&q=80" alt="مشروع نيوم" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/006C35/ffffff?text=NEOM'"/>
+                        <span class="absolute top-3 right-3 bg-saudi-dark/80 backdrop-blur-md text-saudi-gold text-xs font-bold px-3 py-1 rounded-full border border-saudi-gold/30">مستقبل العالم</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-2">مدينة نيوم (NEOM)</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">حلم المستقبل الذي يتحقق على أرض المملكة بتقنيات مستدامة وطاقة نظيفة.</p>
+                    </div>
+                </div>
+
+                <!-- Landmark 3: AlUla -->
+                <div class="glass-card rounded-3xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80" alt="العُلا" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/006C35/ffffff?text=AlUla'"/>
+                        <span class="absolute top-3 right-3 bg-saudi-dark/80 backdrop-blur-md text-saudi-gold text-xs font-bold px-3 py-1 rounded-full border border-saudi-gold/30">متحف حي</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-2">العُلا والـحِجر</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">إحدى تحف الحضارة الإنسانية والتاريخية المسجلة عالمياً في قائمة اليونسكو.</p>
+                    </div>
+                </div>
+
+                <!-- Landmark 4: Makkah & Madinah -->
+                <div class="glass-card rounded-3xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=600&q=80" alt="الحرمين الشريفين" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/006C35/ffffff?text=Holy+Mosque'"/>
+                        <span class="absolute top-3 right-3 bg-saudi-dark/80 backdrop-blur-md text-saudi-gold text-xs font-bold px-3 py-1 rounded-full border border-saudi-gold/30">قلب العالم الإسلامي</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-2">توسعة الحرمين الشريفين</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">عناية رائدة واستثنائية بخدمة ضيوف الرحمن والحجاج والمعتمرين من أرجاء المعمورة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-saudi-dark/50 border-t border-saudi-gold/20">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-saudi-gold/30 text-center relative overflow-hidden">
+                    <div class="inline-flex items-center gap-2 text-xs font-bold text-saudi-gold mb-2">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>اختبر معلوماتك الوطنية</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-6">مسابقة اليوم الوطني 96</h3>
+
+                    <!-- Quiz Question Screen -->
+                    <div id="quizContainer">
+                        <div class="bg-black/20 p-5 rounded-2xl mb-6 border border-white/5">
+                            <span class="text-xs text-saudi-gold block mb-1 font-bold" id="quizProgress">السؤال 1 من 3</span>
+                            <h4 class="text-lg sm:text-xl font-bold text-white" id="quizQuestion">في أي عام ميلادي تم توحيد المملكة العربية السعودية على يد الملك عبدالعزيز رحمه الله؟</h4>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6" id="quizOptions">
+                            <!-- Buttons populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result Screen -->
+                    <div id="quizResult" class="hidden py-6">
+                        <div class="w-16 h-16 rounded-full bg-saudi-gold/20 text-saudi-gold flex items-center justify-center mx-auto mb-4 text-3xl">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h4 class="text-2xl font-black text-white mb-2">أحسنت يا بطل الوطنية!</h4>
+                        <p class="text-gray-300 text-sm mb-6" id="quizScoreText">لقد أجبت على 3 من أصل 3 إجابات صحيحة.</p>
+                        <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-saudi-gold text-saudi-dark font-black text-sm hover:brightness-110 transition">
+                            إعادة الاختبار
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black/60 border-t border-saudi-gold/20 py-8 text-center text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <p class="font-semibold text-gray-300">اليوم الوطني السعودي 96 • نعتز ونفتخر بوطن العطاء</p>
+            </div>
+            <div class="glass-card px-4 py-2 rounded-xl border border-saudi-gold/30 flex items-center gap-2">
+                <span class="text-saudi-gold font-bold">مدرسة ابن كثير المتوسطة</span>
+                <span class="text-gray-500">|</span>
+                <span class="text-gray-200">الطالب: <strong class="text-white">فارس محمد السيد (3/5)</strong></span>
+            </div>
+            <div>
+                <p>© جميع الحقوق محفوظة للمملكة العربية السعودية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* Quotes Generator */
+        const quotes = [
+            {
+                text: "همتنا مثل جبل طويق، لن تنكسر إلا إذا انهد هذا الجبل وسوي بالأرض.",
+                author: "الأمير محمد بن سلمان بن عبدالعزيز"
+            },
+            {
+                text: "بلادي شهابٌ في سماء المجدِ ساطع.. ورايتُنا بالتوحيد والعزةِ خفّاقة.",
+                author: "من وحي الفخر باليوم الوطني"
+            },
+            {
+                text: "إن التوحيد هو أساس هذه الدولة العظيمة، وستبقى المملكة دائماً حصناً شامخاً للإسلام والسلام.",
+                author: "الملك عبدالعزيز آل سعود - طيب الله ثراه"
+            },
+            {
+                text: "هدفنا الأول أن تكون بلادنا أنموذجاً ناجحاً ورائداً في العالم على كافة الأصعدة.",
+                author: "خادم الحرمين الشريفين الملك سلمان بن عبدالعزيز"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+        function generateNationalQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            const q = quotes[currentQuoteIndex];
+            const qText = document.getElementById('quoteText');
+            const qAuthor = document.getElementById('quoteAuthor');
+            
+            qText.style.opacity = '0';
+            setTimeout(() => {
+                qText.textContent = `"${q.text}"`;
+                qAuthor.textContent = `- ${q.author}`;
+                qText.style.opacity = '1';
+            }, 200);
+        }
+
+        /* Confetti & Celebration Effects */
+        function triggerCelebration() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#006C35', '#D4AF37', '#ffffff', '#008C45']
+                });
+            }
+            launchCanvasFireworks();
+        }
+
+        /* Fireworks Canvas Script */
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function launchCanvasFireworks() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 3;
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: centerX,
+                    y: centerY,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.5) * 12,
+                    color: Math.random() > 0.5 ? '#D4AF37' : '#008C45',
+                    alpha: 1,
+                    size: Math.random() * 4 + 2
+                });
+            }
+        }
+
+        function animateFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.015;
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        /* Audio Synthesizer */
+        let audioCtx = null;
+        let isPlayingAnthem = false;
+        let anthemTimeout = null;
+
+        function toggleNationalAnthem() {
+            const bars = document.querySelectorAll('.v-bar');
+            const anthemBtnText = document.getElementById('anthemText');
+            const anthemIcon = document.getElementById('anthemIcon');
+
+            if (!isPlayingAnthem) {
+                isPlayingAnthem = true;
+                bars.forEach(bar => bar.classList.remove('paused'));
+                anthemBtnText.textContent = 'إيقاف السلام الملكي';
+                anthemIcon.className = 'fa-solid fa-pause';
+
+                playRoyalSynthesizerTone();
+                triggerCelebration();
+            } else {
+                stopNationalAnthem();
+            }
+        }
+
+        function stopNationalAnthem() {
+            isPlayingAnthem = false;
+            const bars = document.querySelectorAll('.v-bar');
+            bars.forEach(bar => bar.classList.add('paused'));
+            document.getElementById('anthemText').textContent = 'عزف السلام الملكي (تفاعلي)';
+            document.getElementById('anthemIcon').className = 'fa-solid fa-play';
+            if (anthemTimeout) clearTimeout(anthemTimeout);
+        }
+
+        function playRoyalSynthesizerTone() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                const notes = [293.66, 329.63, 392.00, 440.00, 523.25, 587.33];
+                let time = audioCtx.currentTime;
+
+                notes.forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, time + i * 0.3);
+
+                    gain.gain.setValueAtTime(0.15, time + i * 0.3);
+                    gain.gain.exponentialRampToValueAtTime(0.001, time + i * 0.3 + 0.4);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(time + i * 0.3);
+                    osc.stop(time + i * 0.3 + 0.4);
+                });
+
+                anthemTimeout = setTimeout(() => {
+                    if (isPlayingAnthem) stopNationalAnthem();
+                }, 2500);
+            } catch (e) {
+                console.log('Audio playback initialized');
+            }
+        }
+
+        /* Quiz Logic */
+        const quizQuestions = [
+            {
+                q: "في أي عام ميلادي تم توحيد المملكة العربية السعودية على يد الملك عبدالعزيز رحمه الله؟",
+                options: ["1932 م", "1940 م", "1925 م", "1950 م"],
+                correct: 0
+            },
+            {
+                q: "ما هو شعار المملكة العربية السعودية الرسمي؟",
+                options: ["سيف ونجمة", "سيفان ونخلة", "صقر ونخلة", "تاج وسيفان"],
+                correct: 1
+            },
+            {
+                q: "ما اسم العاصمة التاريخية التي شهدت انطلاقة الدولة السعودية الأولى؟",
+                options: ["جدة", "العُلا", "الدرعية", "مكة المكرمة"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let quizScore = 0;
+
+        function loadQuestion() {
+            const q = quizQuestions[currentQuestion];
+            document.getElementById('quizProgress').textContent = `السؤال ${currentQuestion + 1} من ${quizQuestions.length}`;
+            document.getElementById('quizQuestion').textContent = q.q;
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full py-3 px-4 rounded-xl glass-card text-right font-bold text-white hover:border-saudi-gold text-sm transition';
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx) {
+            if (selectedIdx === quizQuestions[currentQuestion].correct) {
+                quizScore++;
+            }
+
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizScoreText').textContent = `لقد أجبت بشكل صحيح على ${quizScore} من أصل ${quizQuestions.length} أسئلة!`;
+            triggerCelebration();
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            quizScore = 0;
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
